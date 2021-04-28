@@ -18,8 +18,8 @@ function RevButton({ setPosition, position }) {
 			default={{
 				x: 0,
 				y: 0,
-				width: 200,
-				height: 200
+				width: 100,
+				height: 100
 			}}
 		>
 			<Image
@@ -35,7 +35,7 @@ function RevButton({ setPosition, position }) {
 				objectFit="contain"
 				crossOrigin="anonymous"
 				// src="./button.png"
-				src="https://i.imgur.com/EtSWtWt.jpg"
+				src="https://i.imgur.com/PCjRzZV.jpg"
 			/>
 		</Rnd>
 	);

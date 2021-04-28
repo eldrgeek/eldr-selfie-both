@@ -62,15 +62,15 @@ export default () => {
 				>
 					Reset
 				</Button>
-				<label style={{ display: 'block', margin: '10px 0' }}>
+				{/* <label style={{ display: 'block', margin: '10px 0' }}>
 					Width:
 					<input value={width} onChange={(e) => setWidth(e.target.value)} />
-				</label>
+				</label> */}
 			</div>
 			{screenShot && (
 				<img
 					crossOrigin="Anonymous"
-					width={width}
+					width={'100%'}
 					src={screenShot}
 					alt={'ScreenShot'}
 				/>
@@ -84,29 +84,31 @@ export default () => {
 					marginTop: '20px'
 				}}
 			>
-				above
 				{snapShot && (
 					<img
 						crossOrigin="Anonymous"
-						width={width}
+						width={'100%'}
 						src={snapShot}
 						alt={'ScreenShot'}
 					/>
 				)}
-				<DragButton setPosition={null} position={{ x: 0, y: 0 }} />
-				<Webcam
-					videoConstraints={{
-						// width: "10px",
-						// height: "10px",
-						facingMode: 'user'
-					}}
-					// width="100%"
-					audio={false}
-					ref={webcamRef}
-					screenshotFormat="image/jpeg"
-				/>
-				below
-				<Text />
+				{!screenShot && (
+					<DragButton setPosition={null} position={{ x: 0, y: 0 }} />
+				)}
+				{!screenShot && (
+					<Webcam
+						videoConstraints={{
+							// width: "10px",
+							// height: "10px",
+							facingMode: 'user'
+						}}
+						// width="100%"
+						audio={false}
+						ref={webcamRef}
+						width={'100%'}
+						screenshotFormat="image/jpeg"
+					/>
+				)}
 			</div>
 		</div>
 	);
