@@ -1,29 +1,33 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef } from 'react';
 import Webcam from 'react-webcam';
-import { Box, Container, Button, Image } from '@chakra-ui/react';
+import { Flex, Stack, Button, Text, Box } from '@chakra-ui/react';
 
 import html2canvas from 'html2canvas';
-import Text from './Text';
+// import Text from './Text';
 import DragButton from './DragButton';
 // import { useScreenshot } from 'use-react-screenshot';
 
 export default () => {
-	const ref = createRef(null);
+	const ref = createRef();
 	const webcamRef = React.useRef<Webcam>(null);
 
-	const [width, setWidth] = useState(300);
+	// const [width, setWidth] = useState(300);
+	const [position, setPosition] = React.useState({ x: 300, y: 200 });
 	const [screenShot, setScreenShot] = React.useState(null);
 	const [snapShot, setSnapshot] = React.useState(null);
 
 	// const [screenShot, takeScreenShot] = useScreenshot();
 	const getImage = () => {
 		console.log('Taking screenshot');
+		//@ts-ignore
 		const imageSrc = webcamRef.current.getScreenshot();
+		//@ts-ignore
 		setSnapshot(imageSrc);
 	};
 
 	const convToCanvas = () => {
 		console.log('Conv to canvas');
+		//@ts-ignore
 		html2canvas(ref.current, {
 			// canvas: canvas,
 			allowTaint: true,
@@ -37,20 +41,34 @@ export default () => {
 		});
 	};
 	React.useEffect(() => {
-		console.log('screenshotChange');
 		if (snapShot) {
 			convToCanvas();
 		}
 		//@ts-ignore
 	}, [snapShot]); // eslint-disable-line
 	return (
-		<div>
+		<Box mx="auto" maxW="500">
 			<div>
 				{/* <canvas id="canvas" height="100px" width="400px" /> */}
 				{!screenShot && (
-					<Button mx="auto" my="2" border="1px solid black" onClick={getImage}>
-						Take screenshot
-					</Button>
+					<Flex color="black">
+						<Box p={4} flex="1" bg="green.100">
+							<Stack bg="green.100">
+								<Text fontSize="l">Drag button to move</Text>
+								<Text fontSize="l">Drag red dot to resize</Text>
+							</Stack>
+						</Box>
+						<Box flex="1">
+							<Button
+								// mx="auto"
+								m="2"
+								border="1px solid black"
+								onClick={getImage}
+							>
+								Click to take screenshot
+							</Button>
+						</Box>
+					</Flex>
 				)}
 				{screenShot && (
 					<Button
@@ -83,40 +101,43 @@ export default () => {
 			</div>
 			{screenShot && (
 				<img
-					crossOrigin="Anonymous"
+					crossOrigin="anonymous"
 					width={'100%'}
-					src={screenShot}
+					src={screenShot || ''}
 					alt={'ScreenShot'}
 				/>
 			)}
+			{
+				//@ts-ignore
 
-			<div ref={ref}>
-				{snapShot && (
-					<img
-						crossOrigin="Anonymous"
-						width={'100%'}
-						src={snapShot}
-						alt={'ScreenShot'}
-					/>
-				)}
-				{!screenShot && (
-					<DragButton setPosition={null} position={{ x: 0, y: 0 }} />
-				)}
-				{!screenShot && (
-					<Webcam
-						videoConstraints={{
-							// width: "10px",
-							// height: "10px",
-							facingMode: 'user'
-						}}
-						// width="100%"
-						audio={false}
-						ref={webcamRef}
-						width={'100%'}
-						screenshotFormat="image/jpeg"
-					/>
-				)}
-			</div>
-		</div>
+				<div ref={ref}>
+					{snapShot && (
+						<img
+							crossOrigin="anonymous"
+							width={'100%'}
+							src={snapShot || ''}
+							alt={'ScreenShot'}
+						/>
+					)}
+					{!screenShot && (
+						<DragButton setPosition={setPosition} position={position} />
+					)}
+					{!screenShot && (
+						<Webcam
+							videoConstraints={{
+								// width: "10px",
+								// height: "10px",
+								facingMode: 'user'
+							}}
+							// width="100%"
+							audio={false}
+							ref={webcamRef}
+							width={'100%'}
+							screenshotFormat="image/jpeg"
+						/>
+					)}
+				</div>
+			}
+		</Box>
 	);
 };
