@@ -90,14 +90,7 @@ export default () => {
 				/>
 			)}
 
-			<div
-				ref={ref}
-				style={{
-					border: '1px solid #ccc',
-					padding: '10px',
-					marginTop: '20px'
-				}}
-			>
+			<div ref={ref}>
 				{snapShot && (
 					<img
 						crossOrigin="Anonymous"
