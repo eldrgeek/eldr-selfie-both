@@ -47,21 +47,35 @@ export default () => {
 		<div>
 			<div>
 				{/* <canvas id="canvas" height="100px" width="400px" /> */}
-				<button style={{ marginBottom: '10px' }} onClick={getImage}>
-					Take screenshot
-				</button>
-				<Button
-					mx="auto"
-					my="2"
-					border="1px solid black"
-					onClick={() => {
-						// console.log('screenshot', image);
-						setSnapshot(null);
-						setScreenShot(null);
-					}}
-				>
-					Reset
-				</Button>
+				{!screenShot && (
+					<Button mx="auto" my="2" border="1px solid black" onClick={getImage}>
+						Take screenshot
+					</Button>
+				)}
+				{screenShot && (
+					<Button
+						mx="auto"
+						my="2"
+						border="1px solid black"
+						onClick={() => {
+							// console.log('screenshot', image);
+							setSnapshot(null);
+							setScreenShot(null);
+						}}
+					>
+						Reset
+					</Button>
+				)}
+				{screenShot && (
+					<Button
+						mx="auto"
+						my="2"
+						border="1px solid black"
+						onClick={() => alert('coming soon')}
+					>
+						Upload
+					</Button>
+				)}
 				{/* <label style={{ display: 'block', margin: '10px 0' }}>
 					Width:
 					<input value={width} onChange={(e) => setWidth(e.target.value)} />
