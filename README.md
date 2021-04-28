@@ -1,2 +1,2 @@
-# eldr-selfie-both
+# eldr-chakra-ui-template
 Created with CodeSandbox
